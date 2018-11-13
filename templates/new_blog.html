@@ -10,7 +10,8 @@
     {% for post in posts %}
     
     <a href="/new_entry?id={{post.id}}"><h2>{{post.name}}</h2></a>
-    <p>{{post.body}}</p>     
+    <p>{{post.body}}</p>
+    <p>Written by <a href = "/new_blog?user={{post.owner_id}}">{{post.owner.username}}</a></p>     
     
     {% endfor %}  
 

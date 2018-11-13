@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% for post in posts %}
+<h1><a href = "?/new_blog?id={{post.id}}">{{post.name}}</a></h1>
+<p>{{post.body}}</p>
+<p>Written by<a href = "/new_blog?user={{post.owner_id}}">{{post.owner.username}}</a></p>
+
+{% endfor %}
+
+{% endblock %}
