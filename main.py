@@ -117,7 +117,6 @@ def new_post():
 
 @app.route("/login", methods =["POST","GET"])
 def login():
-    password_error = ""
     template_login = jinja_env.get_template("login.html")
     if request.method == "POST":
         username = request.form["username"]
@@ -126,9 +125,9 @@ def login():
         if user and check_pw_hash(password, user.pw_hash):
             session["username"] = username
             flash("Logged in")
-            return redirect("/")
+            return redirect("/new_entry")
         else:
-            return "please enter a valid password"
+            flash("User password incorrect, or user does not exist", "error")
     return template_login.render(header="Login")
 
 @app.route("/signup", methods=["POST","GET"])
