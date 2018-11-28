@@ -11,7 +11,7 @@ jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), a
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://blogz:rkw23jdw@localhost:8889/blogz'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://johndw:rkwjdw@localhost:8889/johndw'
 app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
 app.secret_key = "pmotion2354"
@@ -133,20 +133,54 @@ def login():
 @app.route("/signup", methods=["POST","GET"])
 def signup():
     template_signup = jinja_env.get_template("signup.html")
+    template_index = jinja_env.get_template("index.html")
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
         verify = request.form["verify"]
+        email = request.form["email"]
 
+        username_error = ""
+        password_error = ""
+        verify_error = ""
+        email_error = ""
+
+        if username == "":
+            username_error = "You must enter a valid Username"
+        elif len(username) > 20 or len(username) <= 3:
+            username_error = "You must enter a username between 3 and 20 characters."
+            username = ""
+        elif " " in username:
+            username_error = "You cannot use spaces in your Username"
+            username = ""
+        if password == "":
+            password_error = "You must enter a valid Password"
+        elif len(password) > 20 or len(password) < 3:
+            password_error = "You must enter a password between 3 and 20 characters"
+        elif " " in password:
+            password_error = "You cannot have spaces in your password"
+        if verify == "" or verify != password:
+            verify_error = "Your passwords do not match"
+            verify = ""
+        if email != "":
+            if not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email):
+                email_error = "You must enter a valid email"
         existing_user = User.query.filter_by(username = username).first()
-        if not existing_user:
+        if not existing_user and not username_error and not password_error and not verify_error and not email_error:
             new_user = User(username,password)
             db.session.add(new_user)
             db.session.commit()
             session["username"] = username
-            return redirect("/")
+            return template_index.render()
         else:
-            return "<h1>Duplicate user</h1>"
+            return template_signup.render(
+                username = username,
+                username_error = username_error,
+                password_error = password_error,
+                verify_error = verify_error,
+                email = email,
+                email_error = email_error
+            )
     return template_signup.render()
 
 @app.route("/logout")

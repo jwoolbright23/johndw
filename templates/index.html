@@ -2,10 +2,38 @@
 
 {% block content %}
 
-{% for user in users %}
-<ul>
-    <li><a href = "/new_blog?user={{user.id}}">{{user.username}}</a></li>
-</ul>
-{% endfor %}
+<div class="card mb-3">
+    <h3 class="card-header">Card header</h3>
+    <div class="card-body">
+      <h5 class="card-title">My Favorite Book Series</h5>
+      <h6 class="card-subtitle text-muted">Harry Potter obviously...</h6>
+    </div>
+    <img style="height: 300px; width: 75%; display: block;" src="https://www.barkeranimation.com/media/catalog/product/cache/1/image/69ce6b71b8813d89313be6f869039d3f/5/5/5558.jpg" alt="Card image"></img>
+    <div class="card-body">
+      <p class="card-text"></p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Harry Potter</li>
+      <li class="list-group-item">The Dark Tower</li>
+    </ul>
+    <div class="card-body">
+      <a href="#" class="card-link">Card link</a>
+      <a href="#" class="card-link">Another link</a>
+    </div>
+    <div class="card-footer text-muted">
+      2 days ago
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">The most popular game in the world!</h4>
+      <figure>
+      <img style="height: 400px; width: 75%; display: block;" src="https://cdn2.unrealengine.com/Fortnite%2Fbattle-royale%2Fseason6-social-1920x1080-0a72ec2f35dfe5be6cf8a77ec16063cca4db7046.jpg" alt="Card image">
+      </figure>
+      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      <a href="#" class="card-link">Fortnite Discussion</a>
+      <a href="https://fortnitetracker.com/profile/pc/pmotion" class="card-link">My Profile</a>
+    </div>
+  </div>
 
 {% endblock %}
